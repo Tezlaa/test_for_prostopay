@@ -1,0 +1,22 @@
+
+put_testdata = [
+    ('apple', 'red'),
+    ('banana', 'yellow'),
+    ('grape', 'purple'),
+    (1, 'one'),
+    (2, 'two'),
+    (3, 'three'),
+    ('cat', 4),
+    ('dog', 'woof'),
+    (42, ['answer', 'to', 'life']),
+    ('python', {'version': 3.9, 'framework': 'Django'}),
+    (None, 'null_value'),
+    ('sun', 149.6e6),
+    ('moon', 384.4e3),
+    ('list', [1, 2, 3]),
+    ('set', {4, 5, 6}),
+    ('tuple', (7, 8, 9)),
+    ('complex', 2 + 3j),
+    ('binary', b'010101'),
+    ('unicode', 'привет'),
+]
