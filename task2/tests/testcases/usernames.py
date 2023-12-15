@@ -1,0 +1,15 @@
+test_cases_usernames = [
+    "valid_username",
+    "username123",
+    "user_name",
+    "user.name",
+    "user-name",
+    "123username",
+    "user123_name456",
+    "user",
+    "a" * 50,
+    "",
+    "user!name",
+    "user space",
+    "user@name.com",
+]
