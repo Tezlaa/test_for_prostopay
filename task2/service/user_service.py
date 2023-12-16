@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert
 
 from service.schemas import UserDTO, UserType
-from service.models import User
+from service.models import UsersModel
 from service.exceptions import NotFoundUserById
 
 
@@ -35,19 +35,19 @@ class UserService:
     
     async def __filter(self, **kwargs) -> Optional[UserDTO]:
         """
-        Filter for selecting from service.models.User model
+        Filter for selecting from service.models.UsersModel model
         Using example:
             self.__filter(username='Bogdan', id=5)
-            => will be translate to select(User).where(User.username='Bogdan', User.id=5)
+            => will be translate to select(UsersModel).where(UsersModel.username='Bogdan', UsersModel.id=5)
                and returned as pydantic model service.schemas.UserDTO
         If the user is not found, returned: None
         """
         
         filters = []
         for attribute, value in kwargs.items():
-            filters.append(User.__dict__[attribute] == value)
+            filters.append(UsersModel.__dict__[attribute] == value)
 
-        query = select(User).where(*filters)
+        query = select(UsersModel).where(*filters)
         query_result = await self._session.execute(query)
         
         scalar_one = query_result.scalar_one_or_none()
@@ -58,10 +58,10 @@ class UserService:
 
     async def __insert(self, user_schemas: UserType) -> None:
         """
-        Method for insert by schemas. Schemas need be indentical to service.model.User model
+        Method for insert by schemas. Schemas need be indentical to service.model.UsersModel model
         """
         
-        query = insert(User).values(
+        query = insert(UsersModel).values(
             **dict(user_schemas)
         )
         await self._session.execute(query)

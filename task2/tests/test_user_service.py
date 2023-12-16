@@ -5,7 +5,7 @@ from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from service.user_service import UserService
-from service.models import User
+from service.models import UsersModel
 from service.schemas import UserDTO, UserType
 
 from testcases.usernames import test_cases_usernames
@@ -20,7 +20,7 @@ def userservice(session: AsyncSession) -> UserService:
 async def test_added_users(username, userservice: UserService):
     await userservice.add(user=UserType(username=username))
     
-    test_request = await userservice._session.execute(select(User).where(User.username == username))
+    test_request = await userservice._session.execute(select(UsersModel).where(UsersModel.username == username))
     assert test_request.scalar_one_or_none().username == username
 
 
@@ -49,9 +49,9 @@ async def test_get_from_fulled_db(userservice: UserService):
 async def create_user(session: AsyncSession, username: str) -> int:
     """ Create user by username. Returned user id"""
     
-    query = insert(User).values(
+    query = insert(UsersModel).values(
         username=username
-    ).returning(User.id)
+    ).returning(UsersModel.id)
     returning_id = await session.execute(query)
     await session.commit()
     return returning_id.scalar_one()

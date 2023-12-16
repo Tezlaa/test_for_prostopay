@@ -1,3 +1,6 @@
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import as_declarative, Mapped, mapped_column
 
-Base = declarative_base()
+
+@as_declarative()
+class BaseModel:
+    id: Mapped[int] = mapped_column(primary_key=True)

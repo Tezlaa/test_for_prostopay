@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine, create_async_engin
 from sqlalchemy.orm import sessionmaker
 
 from config.settings import DB_CONNECTION_URL
-from config.database import Base
+from config.database import BaseModel
 
 
 @pytest_asyncio.fixture
@@ -29,13 +29,13 @@ async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
 @pytest_asyncio.fixture(autouse=True)
 async def start_database(engine: AsyncEngine) -> AsyncGenerator[None, None]:
     async with engine.begin() as connect:
-        await connect.run_sync(Base.metadata.drop_all)
-        await connect.run_sync(Base.metadata.create_all)
+        await connect.run_sync(BaseModel.metadata.drop_all)
+        await connect.run_sync(BaseModel.metadata.create_all)
     
     yield
     
     async with engine.begin() as connect:
-        await connect.run_sync(Base.metadata.drop_all)
+        await connect.run_sync(BaseModel.metadata.drop_all)
 
 
 @pytest.fixture(scope='session')
